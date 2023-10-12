@@ -9,7 +9,7 @@ export class coffeeservice {
         @InjectRepository(coffeeentity) private readonly coffeeRepository: Repository<coffeeentity>,
       ) {}
 
-      createUser(coffeeentitydto: coffeeentity): Promise<coffeeentity> {
+      addcoffee(coffeeentitydto: coffeeentity): Promise<coffeeentity> {
         const user: coffeeentity = new coffeeentity();
         user.name = coffeeentitydto.name
         user.size = coffeeentitydto.size;
@@ -34,9 +34,6 @@ export class coffeeservice {
         return deletedRecords.raw;
       }
 
-      removeUser(id: number): Promise<{ affected?: number }> {
-        return this.coffeeRepository.delete(id);
-      }
 
       deletebyid(id: number): Promise<any> {
         return this.coffeeRepository

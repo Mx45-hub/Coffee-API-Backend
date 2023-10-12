@@ -19,7 +19,7 @@ export class coffeecontroller {
 
   @Post('add')
   create(@Body() coffeedtos: coffeedto, @Res() res: Response) {
-     this.coffeeService.createUser(coffeedtos);
+     this.coffeeService.addcoffee(coffeedtos);
      return "Coffee was created successfully";
 
   }
@@ -28,7 +28,6 @@ export class coffeecontroller {
   
   @Delete(':id')
   remove(@Param('id') id: number) {
-    this.coffeeService.removeUser(id);
     this.coffeeService.delete(id);
     this.coffeeService.deletebyid(id);
     return "cat deleted";
