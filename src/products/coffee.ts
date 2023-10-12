@@ -35,7 +35,8 @@ export enum Flavour {
       public size: Size,
       public flavour: Flavour,
       public dietary: Dietary,
-      public strength: Strength
+      public strength: Strength,
+      public imageUrl: string ,
     ) {}
   }
   

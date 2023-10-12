@@ -7,9 +7,11 @@ export class Product{
     flavour: string;
     dietary: string;
     strength: string
+    imageUrl: string;
 
 
-    constructor( id: number, name: string, size: number, flavour: string, dietary: string, strength: string
+    constructor( id: number, name: string, size: number, flavour: string, dietary: string, strength: string, imageUrl: string,
+
       ) 
       {
         this.id = id;
@@ -18,6 +20,8 @@ export class Product{
         this.flavour = flavour;
         this.dietary = dietary
         this.strength = strength;
+        this.imageUrl = imageUrl;
+
 
       }
 

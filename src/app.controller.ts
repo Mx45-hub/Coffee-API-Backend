@@ -10,7 +10,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('index') // Define a new route for /index
+  @Get('index') 
   @Render('index')
   @Header('Content-Type', 'text/html') 
   index() {

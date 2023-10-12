@@ -1,57 +1,36 @@
-import { Controller, Post, Body, Get, Param } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param, HttpException, HttpStatus, Delete,  Res } from "@nestjs/common";
 import { Coffee, Flavour, Dietary, Size, Strength } from './coffee';
 import { coffeedto } from "./coffee.dto";
+import { coffeeservice } from './coffee.service'
+import { coffeeentity } from "./coffee.entity";
 
 
-@Controller('products')
-export class ProductsController {
+@Controller('coffee')
+export class coffeecontroller {
 
-  coffeeList: Coffee[] = [];
+  constructor(private readonly coffeeService: coffeeservice) {}
 
-  constructor() {
-    // Initialize coffeeList in the constructor
-    this.coffeeList = [];
-  }
+
   @Get('list')
-  getAllProducts(): any[] {
-    const coffeeList: Coffee[] = [
-      new Coffee(1, "Espresso", Size.SHORT, Flavour.Vanilla, Dietary.Regular, Strength.Strong),
-      new Coffee(2, "Cappuccino", Size.TALL, Flavour.Caramel, Dietary.Decaf, Strength.Mild),
-      new Coffee(3, "Mocha", Size.GRANDE, Flavour.Chocolate, Dietary.SugarFree, Strength.Strong),
-      new Coffee(4, "Latte", Size.VENTI, Flavour.Hazelnut, Dietary.Regular, Strength.Mild),
-      new Coffee(5, "Americano", Size.TALL, Flavour.Peppermint, Dietary.DairyFree, Strength.ExtraShot),
-    ];
+  getAllProducts() {
+    return this.coffeeService.findAll();
 
-    // mapping the enums names 
-    const mappedCoffeeList = coffeeList.map((coffee) => ({
-      ...coffee,
-      size: Size[coffee.size],
-      flavour: Flavour[coffee.flavour],
-      dietary: Dietary[coffee.dietary],
-      strength: Strength[coffee.strength],
-    }));
+  }
 
-    return mappedCoffeeList;
+  @Post('add')
+  create(@Body() coffeedtos: coffeedto, @Res() res: Response) {
+     this.coffeeService.createUser(coffeedtos);
+     return "Coffee was created successfully";
+
   }
 
 
-  @Post()
-  createProduct(@Body() coffeedto: coffeedto): Coffee {
-    // Create a new Coffee instance from the DTO
-
-    const newCoffee = new Coffee(
-      coffeedto.id,
-      coffeedto.name,
-      coffeedto.size,
-      coffeedto.flavour,
-      coffeedto.dietary,
-      coffeedto.strength
-    );
   
-    // Add the new coffee to the list
-    this.coffeeList.push(newCoffee);
-  
-    // Return the newly created coffee
-    return newCoffee;
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    this.coffeeService.removeUser(id);
+    this.coffeeService.delete(id);
+    this.coffeeService.deletebyid(id);
+    return "cat deleted";
   }
 }
